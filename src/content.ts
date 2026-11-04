@@ -102,7 +102,8 @@ export const content = {
     avatarAspect: 893 / 1750, // ширина / высота картинки персонажа
     lead: "Let's make something",
     big: ["IMPACTFUL", "AND STRIKING"],
-    reachOut: "Reach out",
+    reachOut: "Start a conversation",
+    orEmail: "or email directly: ",
     email: EMAIL,
     socials: [
       { label: "Instagram", href: INSTAGRAM, icon: "instagram" },
@@ -112,6 +113,17 @@ export const content = {
     // [обычный текст, название жирным]
     creditLeft: ["Designed in ", "Figma"],
     creditRight: ["Built with ", "Claude Code"],
+  },
+
+  contactForm: {
+    title: "Start a conversation",
+    name: "Name",
+    email: "Email",
+    subject: "Subject",
+    subjects: ["Project inquiry", "New opportunity", "Collaboration", "Speaking / press", "Something else"],
+    message: "Message",
+    send: "Send message",
+    close: "Close",
   },
 
   menu: {

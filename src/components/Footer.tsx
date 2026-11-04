@@ -1,10 +1,11 @@
 "use client";
 
-import { useRef } from "react";
+import { useCallback, useRef, useState } from "react";
 import { content } from "@/content";
 import { gsap, MOTION_OK, useGsap } from "@/lib/gsap";
 import { SplitChars } from "./SplitChars";
 import { PixelAssemble } from "./PixelAssemble";
+import { ContactForm } from "./ContactForm";
 import { attachNameHover, HOVER_MQ } from "@/lib/nameHover";
 
 const { footer, hero } = content;
@@ -54,6 +55,8 @@ function Icon({ name }: { name: "instagram" | "linkedin" | "mail" }) {
 /** Финальный синий экран: большое имя, аватар, призыв и контакты. */
 export function Footer() {
   const root = useRef<HTMLElement>(null);
+  const [formOpen, setFormOpen] = useState(false);
+  const closeForm = useCallback(() => setFormOpen(false), []);
 
   useGsap(root, ({ q }) => {
     const mm = gsap.matchMedia();
@@ -120,7 +123,23 @@ export function Footer() {
         </div>
 
         <div className="flex flex-col items-center gap-5 md:items-end">
-          <span className="text-[18px] md:text-[clamp(18px,1.25vw,24px)]">{footer.reachOut}</span>
+          <div className="flex flex-col items-center gap-2.5 md:items-end">
+            <button
+              type="button"
+              onClick={() => setFormOpen(true)}
+              aria-haspopup="dialog"
+              className="text-[18px] underline decoration-cream/50 decoration-1 underline-offset-[6px] transition-colors hover:decoration-cream md:text-[clamp(18px,1.25vw,24px)]"
+            >
+              {footer.reachOut}
+            </button>
+            {/* мелкий текст — как подпись «Designed in Figma» ниже; почта — ссылка mailto тем же стилем, что и текст */}
+            <p className="text-[12px] text-cream/80 md:text-[18px]">
+              {footer.orEmail}
+              <a href={`mailto:${footer.email}`} className="transition-opacity hover:opacity-70">
+                {footer.email}
+              </a>
+            </p>
+          </div>
           <div className="flex gap-5">
             {footer.socials.map((s) => (
               <a
@@ -147,6 +166,8 @@ export function Footer() {
           <b className="font-semibold text-cream">{footer.creditRight[1]}</b>
         </span>
       </div>
+
+      <ContactForm open={formOpen} onClose={closeForm} />
     </footer>
   );
 }
