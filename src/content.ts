@@ -59,6 +59,24 @@ export const content = {
     ],
   },
 
+  // блок «Work I've shipped»: наклонённые карточки, которые въезжают и едут лентой при прокрутке (перед Selected work)
+  // cover — обложка 4:3 (на телефоне карточка вертикальная, картинка обрезается по центру). Без cover — заглушка с номером.
+  shipped: {
+    title: "Work I've shipped",
+    subtitle: "Products I've designed and launched, from first flows to features people use every day.",
+    // кнопка ведёт к Selected work; пока тот блок скрыт — кнопки нет (cta: ""). Вернуть: cta: "See all work"
+    cta: "",
+    ctaHref: "#work",
+    items: [
+      { name: "Cyberr", category: "Technical tests", href: "/work/cyberr-technical-tests", cover: "/images/cases/cyberr-tests/Tests-Tests.webp" },
+      { name: "Cyberr", category: "Onboarding", href: "/work/cyberr-onboarding", cover: "/images/cases/cyberr-onboarding/Onb-review.webp" },
+      { name: "Project Two", category: "Web platform", href: "#" },
+      { name: "Project Three", category: "Mobile app", href: "#" },
+      { name: "Project Four", category: "Design system", href: "#" },
+      { name: "Project Five", category: "Product design", href: "#" },
+    ] as { name: string; category: string; href: string; cover?: string }[],
+  },
+
   projects: {
     titleTop: "SELECTED",
     titleBottom: "WORK",
@@ -129,7 +147,7 @@ export const content = {
   menu: {
     links: [
       { label: "Home", href: "#top" },
-      { label: "Work", href: "#work" },
+      { label: "Work", href: "#shipped" }, // пока Selected work (#work) скрыт
       { label: "About", href: "#about" },
       { label: "Contact", href: "#contact" },
     ],

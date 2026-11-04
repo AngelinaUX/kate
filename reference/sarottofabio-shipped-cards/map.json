@@ -1,0 +1,12 @@
+{
+  "expect": { "pinScreens": 4.05 },
+  "note": "У нас 6 карточек вместо 5: высота сцены по формуле 220+(N-1)·60-15 = 505vh, закрепление 4.05 экрана, лента кончается на 1.2+5·0.6-0.15 = 4.05",
+  "pairs": [
+    { "role": "первая карточка, въезд по Y", "ref": "a.absolute.left-1/2.top-1/2:n1", "own": "a.absolute.top-1/2.left-1/2:n1", "prop": "y" },
+    { "role": "вторая карточка, въезд по Y", "ref": "a.absolute.left-1/2.top-1/2:n2", "own": "a.absolute.top-1/2.left-1/2:n2", "prop": "y" },
+    { "role": "третья карточка, масштаб", "ref": "a.absolute.left-1/2.top-1/2:n3", "own": "a.absolute.top-1/2.left-1/2:n3", "prop": "sc" },
+    { "role": "четвёртая карточка, въезд по Y", "ref": "a.absolute.left-1/2.top-1/2:n4", "own": "a.absolute.top-1/2.left-1/2:n4", "prop": "y" },
+    { "role": "первая карточка, лента по X", "ref": "a.absolute.left-1/2.top-1/2:n1", "own": "a.absolute.top-1/2.left-1/2:n1", "prop": "x", "expect": { "end": 4.05 } },
+    { "role": "кнопка", "ref": "div.absolute.inset-x-0.bottom-[6.5%]", "own": "div.absolute.inset-x-0.bottom-[6.5%]", "prop": "o" }
+  ]
+}
