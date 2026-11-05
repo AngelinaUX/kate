@@ -146,6 +146,8 @@ export const content = {
     lead: "Let's make something",
     big: ["IMPACTFUL", "AND STRIKING"],
     reachOut: "Start a conversation",
+    // https://wa.me/<номер без + и пробелов>: +352 691 150 597
+    whatsapp: { label: "Contact via WhatsApp", href: "https://wa.me/352691150597" },
     orEmail: "or email directly: ",
     email: EMAIL,
     socials: [
@@ -193,11 +195,32 @@ export const content = {
     // icon: ux | visual | research | team | analytics (линейные иконки в AboutPage.tsx)
     skills: [
       { icon: "ux", title: "User Experience and User Interface", text: "Proficiency in creating user stories, storyboards, personas, sitemaps, wireframes, low and high-fidelity prototypes." },
-      { icon: "visual", title: "Visual design skills", text: "I understand typography, color theory, visual hierarchy and I am updated in the latest design trends." },
+      { icon: "analytics", title: "Analytical skills", text: "I am passionate to do research and data analysis. I can set up proper KPIs and extract information from data." },
       { icon: "research", title: "User research and Empathy", text: "Because of my experience in Service and Social design, I understand the role of user-centered design and I can lead user interviews with a sense of empathy. I can plan and conduct user testing and surveys." },
       { icon: "team", title: "Teamwork and Communication skills", text: "I have several excellent experiences working as a part of a team. I have been practicing presenting projects to stakeholders since 2006." },
-      { icon: "analytics", title: "Analytical skills", text: "I am passionate to do research and data analysis. I can set up proper KPIs and extract information from data." },
+      { icon: "visual", title: "Visual design skills", text: "I understand typography, color theory, visual hierarchy and I am updated in the latest design trends." },
     ] as { icon: "ux" | "visual" | "research" | "team" | "analytics"; title: string; text: string }[],
+    // карточки сообществ (после навыков). logo: true — картинка-логотип на светлом фоне, иначе фото на всю карточку
+    communityTitle: ["Community", "& events"],
+    community: [
+      {
+        name: "Friends of Figma Luxembourg",
+        role: "Community leader",
+        image: "/images/community/friends-of-figma-luxembourg.webp",
+        alt: "Friends of Figma Luxembourg meetup",
+        href: "https://friends.figma.com/luxembourg",
+        cta: "See events",
+      },
+      {
+        name: "DevFest Luxembourg",
+        role: "Organiser & Creative Director",
+        image: "/images/community/devfest-luxembourg.webp",
+        alt: "DevFest Luxembourg logo",
+        logo: true,
+        href: "https://devfest.lu/",
+        cta: "Visit devfest.lu",
+      },
+    ] as { name: string; role: string; image: string; alt: string; logo?: boolean; href: string; cta: string }[],
     background:
       "My background in Web Design attracted me to this field and so I completed a MSc in Interaction design. I love to travel, meet new people, and get exposed to new cultures.",
     // кнопки под абзацем про бэкграунд; файл CV лежит в public/files

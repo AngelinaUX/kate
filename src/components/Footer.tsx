@@ -52,6 +52,20 @@ function Icon({ name }: { name: "instagram" | "linkedin" | "mail" }) {
   );
 }
 
+// кнопка с обводкой на синем: размеры как у CTA сайта, при наведении заливается светлым
+const OUTLINE_BTN =
+  "inline-flex items-center justify-center gap-2.5 rounded-full border border-cream/70 px-6 py-[14px] text-[16px] leading-none font-medium text-cream transition-colors duration-200 hover:border-cream hover:bg-cream hover:text-accent md:text-[clamp(16px,1.1vw,20px)]";
+
+/** Значок WhatsApp контуром — тем же стилем, что иконки соцсетей (линия 2, скруглённые концы). */
+function WhatsAppIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9" />
+      <path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1" />
+    </svg>
+  );
+}
+
 /** Финальный синий экран: большое имя, аватар, призыв и контакты. */
 export function Footer() {
   const root = useRef<HTMLElement>(null);
@@ -124,14 +138,16 @@ export function Footer() {
 
         <div className="flex flex-col items-center gap-5 md:items-end">
           <div className="flex flex-col items-center gap-2.5 md:items-end">
-            <button
-              type="button"
-              onClick={() => setFormOpen(true)}
-              aria-haspopup="dialog"
-              className="text-[18px] underline decoration-cream/50 decoration-1 underline-offset-[6px] transition-colors hover:decoration-cream md:text-[clamp(18px,1.25vw,24px)]"
-            >
-              {footer.reachOut}
-            </button>
+            {/* две кнопки с обводкой: форма и WhatsApp; на телефоне одна под другой */}
+            <div className="flex w-full flex-col items-stretch gap-3 sm:flex-row sm:items-center">
+              <button type="button" onClick={() => setFormOpen(true)} aria-haspopup="dialog" className={OUTLINE_BTN}>
+                {footer.reachOut}
+              </button>
+              <a href={footer.whatsapp.href} target="_blank" rel="noopener noreferrer" className={OUTLINE_BTN}>
+                <WhatsAppIcon />
+                {footer.whatsapp.label}
+              </a>
+            </div>
             {/* мелкий текст — как подпись «Designed in Figma» ниже; почта — ссылка mailto тем же стилем, что и текст */}
             <p className="text-[12px] text-cream/80 md:text-[18px]">
               {footer.orEmail}

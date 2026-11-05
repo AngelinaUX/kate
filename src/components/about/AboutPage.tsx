@@ -204,18 +204,21 @@ const FACT = "text-[clamp(20px,2.4vw,32px)] leading-none font-medium tracking-[-
 function Facts() {
   const reel = [...copy.facts, ...copy.facts, ...copy.facts, ...copy.facts];
   return (
-    <section className="my-6 overflow-hidden py-6 md:my-10 md:py-10">
-      {/* с движением: лента; останавливается под курсором */}
-      <div
-        className="tools-marquee marquee-hover-pause flex w-max motion-reduce:hidden"
-        style={{ "--marquee-duration": `${MOTION.marquee}s` } as CSSProperties}
-      >
-        {reel.map((f, i) => (
-          <span key={i} aria-hidden={i >= copy.facts.length || undefined} className={`${FACT} flex items-center`}>
-            {f}
-            <span className="px-8 text-accent">·</span>
-          </span>
-        ))}
+    <section className="my-6 py-6 md:my-10 md:py-10">
+      {/* лента обрезается по вертикальным линиям рамки (5% от краёв, как FrameLines); py — запас под хвосты букв g, y, p */}
+      <div className="mx-[5%] overflow-hidden py-[0.15em] text-[clamp(20px,2.4vw,32px)] motion-reduce:hidden">
+        {/* с движением: лента; останавливается под курсором */}
+        <div
+          className="tools-marquee marquee-hover-pause flex w-max"
+          style={{ "--marquee-duration": `${MOTION.marquee}s` } as CSSProperties}
+        >
+          {reel.map((f, i) => (
+            <span key={i} aria-hidden={i >= copy.facts.length || undefined} className={`${FACT} flex items-center`}>
+              {f}
+              <span className="px-8 text-accent">·</span>
+            </span>
+          ))}
+        </div>
       </div>
       {/* «меньше движения»: тот же список стоит на месте и переносится */}
       <div className={`${WRAP} hidden flex-wrap justify-center gap-x-8 gap-y-4 motion-reduce:flex`}>
@@ -287,7 +290,7 @@ function Skills() {
 }
 
 const BTN =
-  "inline-flex items-center gap-2.5 rounded-full border px-6 py-[14px] text-[16px] leading-none font-medium transition-[transform,background-color,color] duration-200 hover:scale-[1.04]";
+  "inline-flex w-full items-center justify-center gap-2.5 rounded-full sm:w-auto border px-6 py-[14px] text-[16px] leading-none font-medium transition-[transform,background-color,color] duration-200 hover:scale-[1.04]";
 
 /* ---------- фон: текст проявляется по словам при прокрутке ---------- */
 
@@ -317,8 +320,8 @@ function Background() {
               </span>
             ))}
           </p>
-          {/* кнопки — размеры как у CTA сайта; CV — синяя, как кнопка меню, LinkedIn — контурная */}
-          <div className="bg-links mt-8 flex flex-wrap gap-3 md:mt-10">
+          {/* кнопки — размеры как у CTA сайта; на телефоне одна под другой во всю ширину; CV — синяя, как кнопка меню, LinkedIn — контурная */}
+          <div className="bg-links mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap md:mt-10">
             <a
               href={copy.cv.href}
               target="_blank"
@@ -344,6 +347,73 @@ function Background() {
                 <path d="M8 7h9v9" />
               </svg>
             </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- сообщества: карточки-ссылки ---------- */
+
+function Community() {
+  const root = useRef<HTMLElement>(null);
+
+  useGsap(root, ({ q }) => {
+    const mm = gsap.matchMedia();
+    mm.add(MOTION_OK, () => {
+      gsap.from(q(".community-char"), { yPercent: 115, stagger: 0.025, duration: 0.9, ease: "power4.out", scrollTrigger: { trigger: root.current, start: "top 75%" } });
+      q(".community-card").forEach((card, i) => {
+        gsap.from(card, { y: 32, opacity: 0, duration: 0.8, delay: i * 0.08, ease: "power3.out", scrollTrigger: { trigger: card, start: "top 90%" } });
+      });
+    });
+  });
+
+  return (
+    <section ref={root} className="py-12 md:py-[90px]">
+      <div className={WRAP}>
+        <div className={INNER}>
+          <h2 className="mb-10 text-[9.8vw] leading-[1.08] font-normal text-ink md:mb-[56px] md:text-[clamp(32px,5vw,64px)] md:leading-[1.14]">
+            <span className="block font-semibold">
+              <SplitChars text={copy.communityTitle[0]} charClass="community-char" />
+            </span>
+            <span className="block">
+              <SplitChars text={copy.communityTitle[1]} charClass="community-char" />
+            </span>
+          </h2>
+          <div className="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-4">
+            {copy.community.map((c) => (
+              <a
+                key={c.name}
+                href={c.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="community-card group flex flex-col overflow-hidden rounded-2xl border border-line bg-white"
+              >
+                <div className={`relative aspect-[16/9] overflow-hidden ${c.logo ? "bg-[#efe7e1]" : ""}`}>
+                  <Image
+                    src={c.image}
+                    alt={c.alt}
+                    fill
+                    sizes="(max-width: 768px) 90vw, 640px"
+                    className={`transition-transform duration-700 ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-[1.04] ${c.logo ? "object-contain p-[14%]" : "object-cover"}`}
+                  />
+                </div>
+                <div className="flex flex-1 flex-col gap-5 p-[26px] md:flex-row md:items-end md:justify-between">
+                  <div>
+                    <p className="mb-2 text-[12px] font-medium tracking-[0.08em] text-muted uppercase md:text-[13px]">{c.role}</p>
+                    <h3 className="text-[22px] leading-[1.1] font-semibold tracking-[-0.02em] text-ink md:text-[26px]">{c.name}</h3>
+                  </div>
+                  <span className={`${BTN} shrink-0 border-ink text-ink group-hover:bg-ink group-hover:text-cream`}>
+                    {c.cta}
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                      <path d="M7 17 17 7" />
+                      <path d="M8 7h9v9" />
+                    </svg>
+                  </span>
+                </div>
+              </a>
+            ))}
           </div>
         </div>
       </div>
@@ -392,7 +462,7 @@ function Contact() {
   );
 }
 
-/** Страница About: первый экран с фото, цифры, лента фактов, навыки, фон и форма. */
+/** Страница About: первый экран с фото, цифры, лента фактов, навыки, сообщества, фон и форма. */
 export function AboutPage() {
   return (
     <div className="relative z-10 bg-cream">
@@ -400,6 +470,7 @@ export function AboutPage() {
       <Stats />
       <Facts />
       <Skills />
+      <Community />
       <Background />
       <Contact />
     </div>
