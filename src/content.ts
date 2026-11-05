@@ -77,6 +77,31 @@ export const content = {
     ] as { name: string; category: string; href: string; cover?: string }[],
   },
 
+  // блок «Process is the product» (после Work I've shipped): сетка плиток — принципы, итоги, навыки, инструменты
+  process: {
+    // [жирная часть, обычная часть]
+    title: ["Process", "is the product."],
+    intro:
+      "Strong products aren't a lucky accident. They grow out of early questions, honest evidence and the confidence to say no when something doesn't serve the user.",
+    // icon: research | systems | outcomes (линейные иконки в ProcessSection.tsx)
+    pillars: [
+      { icon: "research", title: "Research-led", text: "Every decision starts with evidence: interviews, usability tests and analytics come before the first frame." },
+      { icon: "systems", title: "Scalable systems", text: "Components and tokens built to outlive single features. A design system is shared infrastructure for the whole team." },
+      { icon: "outcomes", title: "Business outcomes", text: "Each flow is tied to a metric: conversion, retention, time-to-task. If it can't be measured, it isn't finished." },
+    ] as { icon: "research" | "systems" | "outcomes"; title: string; text: string }[],
+    // ЗАГЛУШКИ: замените на свои итоги. value — то, что крутится счётчиком (цифры и знаки), product — строка над числом
+    results: [
+      { value: "10+", product: "Product design", label: "years of experience" },
+      { value: "22", product: "LinkedIn", label: "recommendations" },
+      { value: "#1", product: "Project name", label: "replace with your result" },
+    ],
+    skills: ["Product discovery", "User research", "Prototyping", "Design systems", "Dev handoff", "WCAG accessibility", "AI workflows"],
+    // логотипы лежат в public/images/tools/<имя в нижнем регистре>.webp
+    tools: ["Figma", "Framer", "Claude", "Posthog", "Mobbin", "Lottie"],
+    explode: "Shake up the skills",
+    tidy: "Put the skills back",
+  },
+
   projects: {
     titleTop: "SELECTED",
     titleBottom: "WORK",
@@ -149,8 +174,9 @@ export const content = {
       { label: "Home", href: "#top" },
       { label: "Work", href: "#shipped" }, // пока Selected work (#work) скрыт
       { label: "About", href: "#about" },
-      { label: "Contact", href: "#contact" },
-    ],
+      // form: true — пункт открывает форму заявки (как «Start a conversation» в футере), а не ведёт к футеру
+      { label: "Contact", href: "#contact", form: true },
+    ] as { label: string; href: string; form?: boolean }[],
     emailButton: "Email me",
     emailCopied: "Copied!",
   },

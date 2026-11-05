@@ -1,0 +1,9 @@
+{
+  "note": "Числа итогов у нас другие (10+, 22, #1 вместо #1, #3, €130K), поэтому длина ленты цифры отличается: путь по Y зависит от цифры. Сравниваем порог и форму, не амплитуду.",
+  "pairs": [
+    { "role": "цифра ряда 1", "ref": "div.font-display.font-medium.leading-[0.88] > span.inline-flex.overflow-hidden > span.relative.block.overflow-hidden > span.absolute.inset-x-0.top-0", "own": "div.process-num.origin-left.text-[56px] > span.inline-flex.overflow-hidden > span.relative.block.overflow-hidden:n1 > span.absolute.inset-x-0.top-0", "prop": "y" },
+    { "role": "цифра ряда 2", "ref": "span.relative.block.overflow-hidden:n1 > span.absolute.inset-x-0.top-0", "own": "span.relative.block.overflow-hidden:n2 > span.absolute.inset-x-0.top-0", "prop": "y" },
+    { "role": "знак ряда 1", "ref": "div.relative.z-10.flex-1:n1 > div.font-display.font-medium.leading-[0.88] > span.inline-flex.overflow-hidden > span.block", "own": "div.relative.z-[1].flex:n1 > div.process-num.origin-left.text-[56px] > span.inline-flex.overflow-hidden > span.block", "prop": "o" },
+    { "role": "лента инструментов", "ref": "div.relative.w-full.overflow-hidden > div.flex.items-center.w-max", "own": "div.relative.w-full.overflow-hidden > div.marquee-scroll.flex.w-max", "prop": "x" }
+  ]
+}

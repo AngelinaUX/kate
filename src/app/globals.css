@@ -183,3 +183,17 @@ html.font-neue .font-wide {
 @media (prefers-reduced-motion: reduce) {
   .frame-line { animation: none; }
 }
+
+/* Бегущая лента логотипов в блоке Process: список повторён 4 раза, сдвиг на половину — бесшовный круг.
+   Длительность задаёт компонент (--marquee-duration), числа из reference/sarottofabio-process/MECHANIC.md */
+@keyframes tools-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.tools-marquee {
+  animation: tools-marquee var(--marquee-duration, 24s) linear infinite;
+  will-change: transform;
+}
+@media (prefers-reduced-motion: reduce) {
+  .tools-marquee { animation: none; }
+}

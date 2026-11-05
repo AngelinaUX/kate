@@ -5,6 +5,7 @@ import { Statement } from "@/components/Statement";
 // Services и Projects временно скрыты (не удалены): вернуть — раскомментировать импорт и строку в разметке
 // import { Services } from "@/components/Services";
 import { ShippedWork } from "@/components/ShippedWork";
+import { ProcessSection } from "@/components/ProcessSection";
 // import { Projects } from "@/components/Projects";
 import { Testimonials } from "@/components/Testimonials";
 import { Footer } from "@/components/Footer";
@@ -19,6 +20,7 @@ export default function Home() {
       <Statement />
       {/* <Services /> */}
       <ShippedWork />
+      <ProcessSection />
       {/* <Projects /> */}
       <Testimonials />
       <Footer />
