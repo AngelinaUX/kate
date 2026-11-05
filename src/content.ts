@@ -158,6 +158,53 @@ export const content = {
     creditRight: ["Built with ", "Claude Code"],
   },
 
+  // страница /about (src/app/about/page.tsx). Блок с годами из референса не переносили.
+  about: {
+    meta: {
+      title: "About — Ekaterina Kasakina",
+      description: "AI-driven Product Designer with 10 years of experience in high-load, mobile-first products.",
+    },
+    // заголовок: [жирная часть, обычная часть]
+    title: ["AI-driven", "Product Designer"],
+    intro: [
+      "AI-driven Product Designer with 10 years of experience at top Europe-based high-load projects with a mobile-first approach. I'm curious about solving human problems and helping businesses grow by designing professional services websites and mobile applications.",
+      "I work at Cyber.ai, the World's Leading Platform for Cyber Professionals. I collaborate with engineers and stakeholders to understand user needs, conduct user interviews and testing, create wireframes and prototypes, and deliver high-fidelity visual design using Figma, Figma Make, Lovable, Claude + Adobe CS.",
+    ],
+    photo: "/images/about/ekaterina.webp",
+    photoAlt: "Ekaterina Kasakina",
+    // value крутится одометром (цифры), остальные знаки проявляются
+    stats: [
+      { value: "10+", label: "years in product design" },
+      { value: "2006", label: "presenting projects to stakeholders since" },
+      { value: "MSc", label: "in Interaction Design" },
+    ],
+    facts: [
+      "Mobile-first",
+      "High-load products",
+      "AI-driven workflows",
+      "User interviews & testing",
+      "Figma · Figma Make",
+      "Lovable + Claude",
+      "Service & social design",
+      "Loves to travel",
+      "New people, new cultures",
+    ],
+    skillsTitle: ["My Product Design", "skills"],
+    // icon: ux | visual | research | team | analytics (линейные иконки в AboutPage.tsx)
+    skills: [
+      { icon: "ux", title: "User Experience and User Interface", text: "Proficiency in creating user stories, storyboards, personas, sitemaps, wireframes, low and high-fidelity prototypes." },
+      { icon: "visual", title: "Visual design skills", text: "I understand typography, color theory, visual hierarchy and I am updated in the latest design trends." },
+      { icon: "research", title: "User research and Empathy", text: "Because of my experience in Service and Social design, I understand the role of user-centered design and I can lead user interviews with a sense of empathy. I can plan and conduct user testing and surveys." },
+      { icon: "team", title: "Teamwork and Communication skills", text: "I have several excellent experiences working as a part of a team. I have been practicing presenting projects to stakeholders since 2006." },
+      { icon: "analytics", title: "Analytical skills", text: "I am passionate to do research and data analysis. I can set up proper KPIs and extract information from data." },
+    ] as { icon: "ux" | "visual" | "research" | "team" | "analytics"; title: string; text: string }[],
+    background:
+      "My background in Web Design attracted me to this field and so I completed a MSc in Interaction design. I love to travel, meet new people, and get exposed to new cultures.",
+    // [жирная часть, обычная часть]
+    ctaTitle: ["Let me know", "what you need!"],
+    ctaText: "I am always curious to work on interesting new projects! 📩",
+  },
+
   contactForm: {
     title: "Start a conversation",
     name: "Name",
@@ -173,7 +220,7 @@ export const content = {
     links: [
       { label: "Home", href: "#top" },
       { label: "Work", href: "#shipped" }, // пока Selected work (#work) скрыт
-      { label: "About", href: "#about" },
+      { label: "About", href: "/about" }, // отдельная страница; ссылки с "/" меню не дополняет префиксом
       // form: true — пункт открывает форму заявки (как «Start a conversation» в футере), а не ведёт к футеру
       { label: "Contact", href: "#contact", form: true },
     ] as { label: string; href: string; form?: boolean }[],

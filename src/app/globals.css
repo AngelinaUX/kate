@@ -197,3 +197,8 @@ html.font-neue .font-wide {
 @media (prefers-reduced-motion: reduce) {
   .tools-marquee { animation: none; }
 }
+
+/* Лента фактов на странице About: останавливается под курсором (как у оригинала, reference/sarottofabio-about) */
+.marquee-hover-pause:hover {
+  animation-play-state: paused;
+}

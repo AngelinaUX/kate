@@ -11,10 +11,84 @@ const noop = () => () => {};
 const EASE = "expo.out"; // тот же, что у кнопки меню
 
 // подписи — тот же стиль, что у подписей в кейсах (CaseUI: 12/13px, medium, uppercase, разрядка 0.08em)
-const label = "cf-item flex shrink-0 flex-col gap-2 text-[12px] font-medium tracking-[0.08em] text-cream/70 uppercase md:text-[13px]";
+const labelBase = "flex shrink-0 flex-col gap-2 text-[12px] font-medium tracking-[0.08em] uppercase md:text-[13px]";
 // поля — основной текст сайта (16px, без разрядки); normal-case/tracking-normal сбрасывают стиль подписи
-const field =
-  "w-full normal-case tracking-normal font-normal rounded-xl border border-cream/25 bg-transparent px-4 py-3 text-[16px] text-cream placeholder:text-cream/40 outline-none transition-colors focus:border-cream";
+const fieldBase = "w-full normal-case tracking-normal font-normal rounded-xl border bg-transparent px-4 py-3 text-[16px] outline-none transition-colors";
+
+// dark — светлый текст на синем/чёрном (всплывающая форма), light — тёмный текст на белом (страница About)
+const TONE = {
+  dark: {
+    label: `${labelBase} text-cream/70`,
+    field: `${fieldBase} border-cream/25 text-cream placeholder:text-cream/40 focus:border-cream`,
+  },
+  light: {
+    label: `${labelBase} text-muted`,
+    field: `${fieldBase} border-line text-ink placeholder:text-ink/35 focus:border-accent`,
+  },
+} as const;
+
+/** Отправка: открывает почтовый клиент с готовым письмом (бэкенда у сайта нет). */
+export function submitContact(e: FormEvent<HTMLFormElement>) {
+  e.preventDefault();
+  const d = new FormData(e.currentTarget);
+  const subject = `${d.get("subject")} — ${d.get("name")}`;
+  const text = `${d.get("message")}\n\n${d.get("name")}\n${d.get("email")}`;
+  window.location.href = `mailto:${contact.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(text)}`;
+}
+
+/** Поля формы и кнопка — общие для всплывающей формы и формы на странице About. tone: "dark" — для синего/чёрного фона, "light" — для белого. */
+export function ContactFields({ itemClass = "", tone = "dark" }: { itemClass?: string; tone?: keyof typeof TONE }) {
+  const { label, field } = TONE[tone];
+  return (
+    <>
+      <label className={`${label} ${itemClass}`}>
+        {t.name}
+        <input name="name" required autoComplete="name" placeholder="Jane Doe" className={field} />
+      </label>
+
+      <label className={`${label} ${itemClass}`}>
+        {t.email}
+        <input name="email" type="email" required autoComplete="email" placeholder="janedoe@company.com" className={field} />
+      </label>
+
+      <label className={`${label} ${itemClass}`}>
+        {t.subject}
+        <span className="relative">
+          <select name="subject" defaultValue={t.subjects[0]} className={`${field} appearance-none pr-10`}>
+            {t.subjects.map((s) => (
+              <option key={s} value={s} className="text-ink">
+                {s}
+              </option>
+            ))}
+          </select>
+          <svg
+            aria-hidden
+            viewBox="0 0 24 24"
+            className="pointer-events-none absolute top-1/2 right-4 size-4 -translate-y-1/2"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
+            <path d="M6 9l6 6 6-6" />
+          </svg>
+        </span>
+      </label>
+
+      <label className={`${label} ${itemClass}`}>
+        {t.message}
+        <textarea name="message" required rows={5} placeholder="A few lines about what you have in mind..." className={`${field} resize-none`} />
+      </label>
+
+      <button
+        type="submit"
+        // размеры и шрифт — как у CTA-кнопок сайта (ShippedWork), цвет и обводка — как у кнопки меню
+        className={`${itemClass} mt-2 flex shrink-0 items-center justify-center rounded-full border border-[#0C6CB6] bg-accent px-6 py-[14px] text-[16px] leading-none font-medium text-cream transition-transform duration-200 hover:scale-[1.04]`}
+      >
+        {t.send}
+      </button>
+    </>
+  );
+}
 
 /**
  * Форма «Start a conversation» поверх сайта.
@@ -79,14 +153,6 @@ export function ContactForm({ open, onClose }: { open: boolean; onClose: () => v
 
   useEffect(() => () => lockScroll(false), []);
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const d = new FormData(e.currentTarget);
-    const subject = `${d.get("subject")} — ${d.get("name")}`;
-    const text = `${d.get("message")}\n\n${d.get("name")}\n${d.get("email")}`;
-    window.location.href = `mailto:${contact.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(text)}`;
-  };
-
   if (!mounted) return null;
 
   return createPortal(
@@ -114,7 +180,7 @@ export function ContactForm({ open, onClose }: { open: boolean; onClose: () => v
 
         <form
           ref={body}
-          onSubmit={onSubmit}
+          onSubmit={submitContact}
           data-lenis-prevent
           className="relative z-10 flex max-h-svh flex-1 flex-col gap-5 overflow-y-auto px-6 pt-8 pb-10 md:max-h-[90svh] md:p-10"
         >
@@ -133,51 +199,7 @@ export function ContactForm({ open, onClose }: { open: boolean; onClose: () => v
             </button>
           </div>
 
-          <label className={label}>
-            {t.name}
-            <input name="name" required autoComplete="name" placeholder="Jane Doe" className={field} />
-          </label>
-
-          <label className={label}>
-            {t.email}
-            <input name="email" type="email" required autoComplete="email" placeholder="janedoe@company.com" className={field} />
-          </label>
-
-          <label className={label}>
-            {t.subject}
-            <span className="relative">
-              <select name="subject" defaultValue={t.subjects[0]} className={`${field} appearance-none pr-10`}>
-                {t.subjects.map((s) => (
-                  <option key={s} value={s} className="text-ink">
-                    {s}
-                  </option>
-                ))}
-              </select>
-              <svg
-                aria-hidden
-                viewBox="0 0 24 24"
-                className="pointer-events-none absolute top-1/2 right-4 size-4 -translate-y-1/2"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <path d="M6 9l6 6 6-6" />
-              </svg>
-            </span>
-          </label>
-
-          <label className={label}>
-            {t.message}
-            <textarea name="message" required rows={5} placeholder="A few lines about what you have in mind..." className={`${field} resize-none`} />
-          </label>
-
-          <button
-            type="submit"
-            // размеры и шрифт — как у CTA-кнопок сайта (ShippedWork), цвет и обводка — как у кнопки меню
-            className="cf-item mt-2 flex shrink-0 items-center justify-center rounded-full border border-[#0C6CB6] bg-accent px-6 py-[14px] text-[16px] leading-none font-medium text-cream transition-transform duration-200 hover:scale-[1.04]"
-          >
-            {t.send}
-          </button>
+          <ContactFields itemClass="cf-item" />
         </form>
       </div>
     </div>,
