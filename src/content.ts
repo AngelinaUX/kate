@@ -200,6 +200,9 @@ export const content = {
     ] as { icon: "ux" | "visual" | "research" | "team" | "analytics"; title: string; text: string }[],
     background:
       "My background in Web Design attracted me to this field and so I completed a MSc in Interaction design. I love to travel, meet new people, and get exposed to new cultures.",
+    // кнопки под абзацем про бэкграунд; файл CV лежит в public/files
+    cv: { label: "Download CV", href: "/files/Ekaterina_Kasakina_CV.pdf" },
+    linkedinLabel: "LinkedIn",
     // [жирная часть, обычная часть]
     ctaTitle: ["Let me know", "what you need!"],
     ctaText: "I am always curious to work on interesting new projects! 📩",

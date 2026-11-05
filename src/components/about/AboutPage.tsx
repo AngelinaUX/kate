@@ -286,6 +286,9 @@ function Skills() {
   );
 }
 
+const BTN =
+  "inline-flex items-center gap-2.5 rounded-full border px-6 py-[14px] text-[16px] leading-none font-medium transition-[transform,background-color,color] duration-200 hover:scale-[1.04]";
+
 /* ---------- фон: текст проявляется по словам при прокрутке ---------- */
 
 function Background() {
@@ -299,19 +302,50 @@ function Background() {
         { opacity: 0.15 },
         { opacity: 1, stagger: 0.1, ease: "none", scrollTrigger: { trigger: root.current, start: "top 80%", end: "bottom 55%", scrub: true } },
       );
+      gsap.from(q(".bg-links > a"), { y: 20, opacity: 0, stagger: 0.08, duration: 0.7, ease: "power3.out", scrollTrigger: { trigger: q(".bg-links")[0], start: "top 92%" } });
     });
   });
 
   return (
     <section ref={root} className="py-12 md:py-[90px]">
       <div className={WRAP}>
-        <p className={`${INNER} max-w-[1100px]! text-[clamp(24px,3.2vw,48px)] leading-[1.2] font-medium tracking-[-0.02em] text-ink`}>
-          {copy.background.split(" ").map((w, i) => (
-            <span key={i} className="bg-word">
-              {w}{" "}
-            </span>
-          ))}
-        </p>
+        <div className={`${INNER} max-w-[1100px]!`}>
+          <p className="text-[clamp(24px,3.2vw,48px)] leading-[1.2] font-medium tracking-[-0.02em] text-ink">
+            {copy.background.split(" ").map((w, i) => (
+              <span key={i} className="bg-word">
+                {w}{" "}
+              </span>
+            ))}
+          </p>
+          {/* кнопки — размеры как у CTA сайта; CV — синяя, как кнопка меню, LinkedIn — контурная */}
+          <div className="bg-links mt-8 flex flex-wrap gap-3 md:mt-10">
+            <a
+              href={copy.cv.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`${BTN} border-[#0C6CB6] bg-accent text-cream`}
+            >
+              {copy.cv.label}
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <path d="M12 4v11" />
+                <path d="m7 10 5 5 5-5" />
+                <path d="M5 20h14" />
+              </svg>
+            </a>
+            <a
+              href={content.contact.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`${BTN} border-ink text-ink hover:bg-ink hover:text-cream`}
+            >
+              {copy.linkedinLabel}
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <path d="M7 17 17 7" />
+                <path d="M8 7h9v9" />
+              </svg>
+            </a>
+          </div>
+        </div>
       </div>
     </section>
   );
